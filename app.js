@@ -24,9 +24,13 @@ const middleCheckAge = (req, res, next) => {
 app.get('/', (req, res) => res.render('form'))
 
 app.post('/check', (req, res) => {
-  return req.body.age >= 18 ?
-    res.redirect(`/major/?age=${req.body.age}`) :
-    res.redirect(`/minor/?age=${req.body.age}`)
+  let age = req.body.age
+
+  if (age > 18) {
+    return res.redirect(`/major/?age=${req.body.age}`)
+  } else {
+    return res.redirect(`/minor/?age=${req.body.age}`)
+  }
 })
 
 app.get('/major', middleCheckAge, (req, res) => {
